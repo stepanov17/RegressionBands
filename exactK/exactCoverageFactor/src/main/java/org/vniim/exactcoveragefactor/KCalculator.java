@@ -148,17 +148,33 @@ public class KCalculator {
 
 
 
-    public static void main(String[] args) {
+    public static void main(String args[]) {
 
-        int n0 = 35, n = 100;
+        int n = 100, n0 = 35;
+
+        if (args.length == 2) {
+
+            n = Integer.parseInt(args[0]);
+            if (n < 2) { throw new RuntimeException("invalid n"); }
+
+            n0 = Integer.parseInt(args[1]);
+            if (n0 > n) { throw new RuntimeException("invalid n0"); }
+
+        } else {
+
+            System.out.println(">> using default n, n0 values");
+        }
+
+        System.out.println(">> n = " + n + ", n0 = " + n0 + ",  a / rho / K:");
+        System.out.println();
 
         for (int i = 0; i < 10; ++i) {
             double a = 0.1 * i;
             KCalculator calc = new KCalculator(n, n0, a);
             double K95 = calc.calculateK(2., 3.);
             System.out.println(
-                    FMT.format(a)        + "  " +
-                    FMT.format(calc.rho) + "  " +
+                    FMT.format(a)        + "\t" +
+                    FMT.format(calc.rho) + "\t" +
                     FMT.format(K95));
         }
     }

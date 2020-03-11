@@ -1,0 +1,2 @@
+mvn assembly:assembly                 -- to assembly jar
+java -jar KCalculator.jar <n> <n0>    -- to start calculations
