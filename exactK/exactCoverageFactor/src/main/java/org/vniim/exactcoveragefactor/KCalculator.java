@@ -61,11 +61,6 @@ public class KCalculator {
         RealMatrix Prod = A.transpose().multiply(VInv).multiply(A);
         RealMatrix T = new LUDecomposition(Prod).getSolver().getInverse();
 
-//        System.out.println(T.getEntry(0, 0));
-//        System.out.println(T.getEntry(0, 1));
-//        System.out.println(T.getEntry(1, 0));
-//        System.out.println(T.getEntry(1, 1));
-
         vals = new double[][]{{1., 0.}};
         RealMatrix v1 = MatrixUtils.createRealMatrix(vals);
 
@@ -121,31 +116,29 @@ public class KCalculator {
 
     private double calculateK(double KLow, double KHigh) {
 
-        double f1 = F(KLow);
-        if (f1 > p0 + 1.e-3) { return Double.NaN; }
+        double p = F(KLow);
+        if (p > p0 + 1.e-3) { return Double.NaN; } // bad initial KLow (not enough "low")
 
-        double f2 = F(KHigh);
-        if (f2 < p0 - 1.e-3) { return Double.NaN; }
+        p = F(KHigh);
+        if (p < p0 - 1.e-3) { return Double.NaN; } // bad initial KHigh (not enough "high")
 
         // bisection
-        while (KHigh - KLow > 1.e-7) {
+        while (KHigh - KLow > 1.e-6) {
 
             double KMid = 0.5 * (KLow + KHigh);
-            double f = F(KMid);
+            p = F(KMid);
 
-            if (f > p0) {
+            if (p > p0) {
                 KHigh = KMid;
-                f2 = f;
             } else {
                 KLow = KMid;
-                f1 = f;
             }
         }
 
         double K = 0.5 * (KLow + KHigh);
 
         // a rough check, just in case
-        double p = F(K);
+        p = F(K);
         if (Math.abs(p - p0) > 1.e-3) {
             throw new RuntimeException("check failed, F(K) != P0, got " + p);
         }
