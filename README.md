@@ -4,6 +4,7 @@ in particular, noise x_k could fit an AR(1) model:
 <p align="center">x_k = a x_{k - 1} + sqrt(1 - a^2) e_k,</p>
 where e_k is a white noise.
 
+</p>
 
 Results:
 
