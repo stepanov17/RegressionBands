@@ -8,7 +8,7 @@ where e_k is a white noise.
 
 Results:
 
-[1. Exact values of coverage factor K for normal e_k](exactK/K.pdf)
+[1. Exact values of coverage factor K for normally distributed e_k](exactK/K.pdf)
 
 [2. Values of coverage factor K for e_k having two-side power (TSP) distribution (obtained by Monte Carlo simulation)](AR1Noise/K.pdf)
 
