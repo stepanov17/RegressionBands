@@ -1,7 +1,7 @@
 Regression model:
 <p align="center">y_k = b_0 + b_1 t_k + x_k,</p>
 in particular, noise x_k could fit an AR(1) model:
-<p align="center">x_k = a x_{k - 1} + sqrt(1 - a^2) e_k,</p>
+<p align="center">x_k = a x_{k - 1} + sqrt(1 - a^2) e_k,  |a| < 1</p>
 where e_k is a white noise.
 
 </p>
