@@ -13,3 +13,5 @@ Results:
 [2. Values of coverage factor K for e_k having two-side power (TSP) distribution (obtained by Monte Carlo simulation)](AR1Noise/K.pdf)
 
 [3. Values of coverage factor K when x_k is 1/f^alpha noise (obtained by Monte Carlo simulation)](coloredNoise/K.pdf)
+
+(confidence level = 95%)

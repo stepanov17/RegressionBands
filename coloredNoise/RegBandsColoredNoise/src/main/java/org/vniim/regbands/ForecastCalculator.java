@@ -5,15 +5,15 @@ import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 
 public class ForecastCalculator {
-    
+
     private final int n, n0;
-    
+
     private final double U[];
-    
+
     private final RealMatrix M;
     private final RealMatrix Theta;
 
-    
+
     public ForecastCalculator(int n, int n0, double R[]) {
 
         this.n = n;
@@ -30,7 +30,7 @@ public class ForecastCalculator {
         }
         RealMatrix W = MatrixUtils.createRealMatrix(w);
         RealMatrix WI = new LUDecomposition(W).getSolver().getInverse();
-        
+
         double v[][] = new double[n0][2];
         for (int i = 0; i < n0; ++i) {
             v[i][0] = 1.; v[i][1] = i;
@@ -39,20 +39,20 @@ public class ForecastCalculator {
         RealMatrix T = V.transpose().multiply(WI).multiply(V);
         Theta = new LUDecomposition(T).getSolver().getInverse();
         M = Theta.multiply(V.transpose()).multiply(WI);
-        
+
         double
                 theta_11 = Theta.getEntry(0, 0),
                 theta_12 = Theta.getEntry(0, 1),
                 theta_22 = Theta.getEntry(1, 1);
-        
+
         U = new double[n];
         for (int i = 0; i < n; ++i) {
             U[i] = Math.sqrt(theta_11 + 2 * i * theta_12 + i * i * theta_22);
         }
     }
-    
+
     public double[] getU() { return U; }
-    
+
     public double[] getForecast(double data[]) {
 
         if (data.length != n) { throw new RuntimeException("invalid data size"); }
@@ -60,12 +60,12 @@ public class ForecastCalculator {
         for (int i = 0; i < n0; ++i) { S.setEntry(i, 0, data[i]); }
         RealMatrix C = M.multiply(S);
         double a = C.getEntry(0, 0), b = C.getEntry(1, 0);
-        
+
         double forecast[] = new double[n];
         for (int i = 0; i < n; ++i) { forecast[i] = a + b * i; }
         return forecast;
     }
-    
+
     public void printTheta() {
         for (int i = 0; i < Theta.getRowDimension(); ++i) {
             for (int j = 0; j < Theta.getColumnDimension(); ++j) {
